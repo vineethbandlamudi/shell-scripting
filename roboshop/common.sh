@@ -15,6 +15,7 @@ STAT_CHECK() {
   else
     echo -e "\e[31mFailure\e[0m"
     exit 1
+  fi
 }
 
 
