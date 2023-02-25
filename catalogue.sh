@@ -34,6 +34,6 @@ sed -i -e 's/MONGO_DNSNAME/localhost/' /home/roboshop/catalogue/systemd.service 
 STAT_CHECK $?
 
 PRINT "Start Catalogue Service"
-systemctl daemon-reload &>>$LOG systemctl enable catalogue &>>$LOG systemctl start catalogue&>>$LOG
+systemctl daemon-reload &>>$LOG && systemctl enable catalogue &>>$LOG  && systemctl start catalogue&>>$LOG
 STAT_CHECK $?
 
