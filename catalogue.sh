@@ -2,11 +2,11 @@
 
 source common.sh
 
-PRINT "Install NodeJS\t"
+PRINT "Install NodeJS\t\t"
 yum install nodejs make gcc-c++ -y  &>>$LOG
 STAT_CHECK $?
 
-PRINT "Add Roboshop User"
+PRINT "Add Roboshop User\t"
 id roboshop &>>$LOG
 if [ $? -ne 0 ]; then
   useradd roboshop
@@ -18,5 +18,13 @@ curl -s -L -o /tmp/catalogue.zip "https://github.com/roboshop-devops-project/cat
 STAT_CHECK $?
 
 PRINT "Extract Application Code"
-cd /home/roboshop && unzip -o /tmp/catalogue.zip &>>$LOG
+cd /home/roboshop && unzip -o /tmp/catalogue.zip &>>$LOG && rm -rf catalogue && mv catalogue-main catalogue
+STAT_CHECK $?
+
+PRINT "Install Code Dependencies"
+cd /home/roboshop/catalogue && npm install --unsafe-perm &>>$LOG
+STAT_CHECK $?
+
+PRINT "Fix Permissions\t"
+chown -R roboshop:roboshop /home/roboshop &>>$LOG
 STAT_CHECK $?
