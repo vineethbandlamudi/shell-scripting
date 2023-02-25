@@ -29,11 +29,11 @@ PRINT "Fix Permissions\t\t"
 chown -R roboshop:roboshop /home/roboshop &>>$LOG
 STAT_CHECK $?
 
-PRINT "Setup SystemD file"
+PRINT "Setup SystemD file\t"
 sed -i -e 's/MONGO_DNSNAME/localhost/' /home/roboshop/catalogue/systemd.service &>>$LOG && mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service
 STAT_CHECK $?
 
-PRINT "Start Catalogue Service"
+PRINT "Start Catalogue Service\t"
 systemctl daemon-reload &>>$LOG && systemctl enable catalogue &>>$LOG  && systemctl start catalogue&>>$LOG
 STAT_CHECK $?
 
