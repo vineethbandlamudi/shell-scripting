@@ -25,6 +25,15 @@ PRINT "Install Code Dependencies"
 cd /home/roboshop/catalogue && npm install --unsafe-perm &>>$LOG
 STAT_CHECK $?
 
-PRINT "Fix Permissions\t"
+PRINT "Fix Permissions\t\t
 chown -R roboshop:roboshop /home/roboshop &>>$LOG
 STAT_CHECK $?
+
+PRINT "Setup SystemD file"
+sed -i -e 's/MONGO_DNSNAME/127.0.0.1/' /home/roboshop/catalogue/systemd.service $>>$LOG && mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service
+STAT_CHECK $?
+
+PRINT "Start Catalogue Service"
+systemctl daemon-reload &>>$LOG systemctl enable catalogue &>>$LOG systemctl start catalogue&>>$LOG
+STAT_CHECK $?
+
