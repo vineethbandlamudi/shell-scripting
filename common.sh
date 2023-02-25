@@ -15,9 +15,9 @@ PRINT() {
 
 STAT_CHECK() {
   if [ $1 -eq 0 ]; then
-    echo "Done"
+    echo -e "[\e32mDone\e[0m"
   else
-    echo "Fail"
+    echo -e "\e31mFail\e[0m"
     exit 1
   fi
 }

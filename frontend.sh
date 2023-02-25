@@ -7,7 +7,7 @@ yum install nginx -y &>>$LOG
 STAT_CHECK $?
 
 PRINT "Download Frontend"
-curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip"
+curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip" &>>$LOG
 STAT_CHECK $1
 
 PRINT "Remove old HtDocs"
