@@ -2,7 +2,7 @@
 
 source common.sh
 
-PRINT "Install Nginx"
+PRINT "Install Nginx\t"
 yum install nginx -y &>>$LOG
 STAT_CHECK $?
 
@@ -18,15 +18,15 @@ PRINT "Extract Frontend Archive"
 unzip /tmp/frontend.zip &>>$LOG && mv frontend-main/* . &>>$LOG && mv static/* . &>>$LOG && rm -rf frontend-master static &>>$LOG
 STAT_CHECK $?
 
-PRINT "Updarte Roboshop Config"
+PRINT "Update Roboshop Config"
 mv localhost.conf /etc/nginx/default.d/roboshop.conf &>>$LOG
 STAT_CHECK $?
 
-PRINT "Enable Nginx"
+PRINT "Enable Nginx\t"
 systemctl enable nginx &>>$LOG
 STAT_CHECK $?
 
-PRINT "Start Nginx"
+PRINT "Start Nginx\t"
 systemctl start nginx &>>$LOG
 STAT_CHECK $?
 
