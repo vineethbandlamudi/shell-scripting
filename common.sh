@@ -15,9 +15,10 @@ PRINT() {
 
 STAT_CHECK() {
   if [ $1 -eq 0 ]; then
-    echo -e "[\e32mDone\e[0m"
+    echo -e "\e[32m Done\e[0m"
   else
-    echo -e "\e31mFail\e[0m"
+    echo -e "\e[31m Fail\e[0m"
+    echo -e "\e[33m Check log file for more info - $LOG\e[0m"
     exit 1
   fi
 }
