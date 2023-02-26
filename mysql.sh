@@ -18,7 +18,7 @@ PRINT "Start MySQL Service"
 systemctl enable mysqld &>>$LOG && systemctl start mysqld &>>$LOG
 STAT_CHECK $?
 
-PRINT "Reset MySQL Temp Password"
+PRINT "Reset MySQL Password"
 TEMP_PASS=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
 echo "show databases;" | mysql -uroot -pRoboShop@1 &>>$LOG
 if [ $? -ne 0 ]; then
@@ -27,17 +27,17 @@ fi
 STAT_CHECK $?
 
 PRINT "Uninstall Plugin"
-echo "show plugins;" | mysql -u root -pRoboShop@1 | grep 'validate_password' &>>$LOG
+echo "show plugins;" | mysql -u root -pRoboShop@1 &>>$LOG | grep 'validate_password' &>>$LOG
 if [ $? -eq 0 ]; then
   echo "uninstall plugin validate_password;" | mysql -u root -pRoboShop@1 &>>$LOG
 fi
 STAT_CHECK $?
 
-PRINT "Download Schema"
+PRINT "Download Schema\t"
 curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
 STAT_CHECK $?
 
-PRINT "Load Schema"
+PRINT "Load Schema\t"
 cd /tmp && unzip -o mysql.zip &>>$LOG && cd mysql-main && mysql -uroot -pRoboShop@1 <shipping.sql &>>$LOG
 STAT_CHECK $?
 
