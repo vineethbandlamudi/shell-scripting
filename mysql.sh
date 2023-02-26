@@ -20,7 +20,7 @@ STAT_CHECK $?
 
 PRINT "Reset MySQL Temp Password"
 TEMP_PASS=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
-echo"show databases;" | mysql -uroot -pRoboShop@1 &>>$LOG
+echo "show databases;" | mysql -uroot -pRoboShop@1 &>>$LOG
 if [ $? -ne 0 ]; then
   echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';" | mysql -uroot -p${TEMP_PASS} --connect-expired-password &>>$LOG
 fi
