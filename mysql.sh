@@ -27,7 +27,7 @@ fi
 STAT_CHECK $?
 
 PRINT "Uninstall Plugin"
-ehco "show plugins;" | mysql -u root -pRoboShop@1 | grep 'validate_password' &>>$LOG
+echo "show plugins;" | mysql -u root -pRoboShop@1 | grep 'validate_password' &>>$LOG
 if [ $? -eq 0 ]; then
   echo "uninstall plugin validate_password;" | mysql -u root -pRoboShop@1 &>>$LOG
 fi
