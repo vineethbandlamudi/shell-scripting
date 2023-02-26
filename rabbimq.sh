@@ -2,7 +2,7 @@
 
 source common.sh
 
-PRINT "Install Erlang"
+PRINT "Install Erlang\t"
 if [  $? -ne 0 ]; then
   yum install https://github.com/rabbitmq/erlang-rpm/releases/download/v23.2.6/erlang-23.2.6-1.el7.x86_64.rpm -y  &>>$LOG
 fi
@@ -21,7 +21,11 @@ systemctl enable rabbitmq-server &>>$LOG &&  systemctl start rabbitmq-server &>>
 STAT_CHECK $?
 
 PRINT "Create Applcation User"
-rabbitmqctl add_user roboshop roboshop123 &>>$LOG
+rabbitmqctl list_users &>>$LOG | grep roboshop &>>$LOG
+if [ $? -ne 0 ]; then
+  rabbitmqctl add_user roboshop roboshop123 &>>$LOG
+fi
+rabbitmqctl set_user_tags roboshop administrator &>>$LOG && rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG
 STAT_CHECK $?
 
 
