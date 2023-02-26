@@ -92,20 +92,20 @@ JAVA (){
 }
 
 PYTHON3() {
-  PRINT "Intstall Python3"
+  PRINT "Intstall Python3\t"
   yum install python36 gcc python3-devel -y &>>$LOG
   STAT_CHECK $?
 
   ADD_APPLICATION_USER
   DOWNLOAD_CODE
 
-  PRINT "Install Dependencies"
+  PRINT "Install Dependencies\t"
   cd /home/roboshop/${COMPONENT} && pip3 install -r requirements.txt &>>$LOG
   STAT_CHECK $?
 
   PRINT "Update Service Configuration"
-  userID=$(roboshop -u)
-  groupID=$(roboshop -g)
+  userID=$(id -u roboshop)
+  groupID=$(id -g roboshop)
   sed -i -e "/uid/ c uid=${userID}" -e "/gid/ c gid=${groupID}" payment.ini  &>>$LOG
   STAT_CHECK $?
 
