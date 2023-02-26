@@ -76,14 +76,14 @@ NODEJS() {
 }
 
 JAVA (){
-  PRINT "Install Maven\t"
+  PRINT "Install Maven\t\t"
   yum install maven -y &>>$LOG
   STAT_CHECK $?
 
   ADD_APPLICATION_USER
   DOWNLOAD_CODE
 
-  PRINT "Compile Code\t"
+  PRINT "Compile Code\t\t"
   cd /home/roboshop/${COMPONENT} && mvn clean package &>>$LOG && mv target/shipping-1.0.jar shipping.jar
   STAT_CHECK $?
 
