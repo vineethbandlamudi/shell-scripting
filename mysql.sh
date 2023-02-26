@@ -26,3 +26,20 @@ if [ $? -ne 0 ]; then
 fi
 STAT_CHECK $?
 
+PRINT "Uninstall Plugin"
+ehco "show plugins;" | mysql -u root -pRoboShop@1 | grep 'validate_password' &>>$LOG
+if [ $? -eq 0 ]; then
+  echo "uninstall plugin validate_password;" | mysql -u root -pRoboShop@1 &>>$LOG
+fi
+STAT_CHECK $?
+
+PRINT "Download Schema"
+curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
+STAT_CHECK $?
+
+PRINT "Load Schema"
+cd /tmp && unzip -o mysql.zip &>>$LOG && cd mysql-main && mysql -uroot -pRoboShop@1 <shipping.sql &>>$LOG
+STAT_CHECK $?
+
+
+
